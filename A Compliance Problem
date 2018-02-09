@@ -1,0 +1,63 @@
+//Problem        : A Compliance Problem
+//Language       : C
+//Compiled Using : GCC
+//Version        : GCC 4.9.1
+//Input for your program will be provided from STDIN
+//Print out all output from your program to STDOUT
+
+#include <stdio.h>
+#include <string.h>
+
+int even_char(char* a) {
+    if(strlen(a)%2==0)
+        return 1;
+    return 0;
+}
+
+int check(char* a, int b) {
+    int i, k=0;
+    for(i=0; a[i]!='\0'; i++) {
+        if(a[b]==a[i])
+            k++;
+    }
+    return k;
+}
+
+char odd_char(char* a) {
+    int i;
+    for(i=0; a[i]!='\0'; i++) {
+        if(check(a, i)%2==1)
+            return a[i];
+    }
+}
+
+int even_and_odd (char *a){
+    if(even_char(a)) {
+        int i;
+        for(i=0; a[i]!='\0'; i++) {
+            if(check(a, i)%2==1)
+                return 0;
+        }
+        return 1;
+    }
+    int i;
+    for(i=0; a[i]!='\0'; i++) {
+        if(check(a, i)%2==1 && a[i]!=odd_char(a))
+            return 0;
+    }
+    return 1;
+}
+
+char* yn(char* a) {
+    if(even_and_odd(a))
+        return "yes";
+    return "no";
+}
+
+int main() {
+    char a[501];
+    scanf("%s", a);
+    printf("%s", yn(a));
+    return 0;
+    
+}
