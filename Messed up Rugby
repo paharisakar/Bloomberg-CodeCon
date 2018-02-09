@@ -1,0 +1,27 @@
+//Problem        : Messed up Rugby
+//Language       : C
+//Compiled Using : GCC
+//Version        : GCC 4.9.1
+//Input for your program will be provided from STDIN
+//Print out all output from your program to STDOUT
+#include <stdio.h>
+
+void score_breakdown(int score) {
+    int i, j, k;
+    for(i=0; i<score/7+1; i++) {
+        for(j=0; j<score/3+1; j++) {
+            for(k=0; k<score/2+1; k++) {
+                if(score-((i*7)+(j*3)+(k*2))==0) {
+                    printf("%d %d %d\n", i, j, k);
+                }
+            }
+        }
+    }
+}
+
+int main() {
+    int score;
+    scanf("%d", &score);
+    score_breakdown(score);
+    return 0;
+}
