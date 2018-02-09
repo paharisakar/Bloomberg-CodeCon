@@ -1,0 +1,117 @@
+//Problem        : Lannisters of Justice
+//Language       : C
+//Compiled Using : GCC
+//Version        : GCC 4.9.1
+//Input for your program will be provided from STDIN
+//Print out all output from your program to STDOUT
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+    double ans (char []);
+    int find(char);
+    double domath(char , double , double );
+    char check(char);
+
+    int main(void){
+        char expression[100];
+        double answer;
+
+        scanf("%[^\n]", expression);
+        answer = ans(expression);
+        printf("%d\n", (int)answer);
+        return 0;
+    }
+
+    double ans(char expr[]){
+        double numbers[5]; int nsi = 0;
+        char operators[5]; int osi = 0;
+        char numberBuffer[16]; int nbi = 0;
+        char ch; int i = 0;
+
+            while ((ch = expr[i]) != 0) {
+                if (check(ch))
+            {
+        numberBuffer[nbi++] = ch;
+        if (!check(expr[i + 1])){
+            numberBuffer[nbi] = 0; nbi = 0;
+            sscanf(numberBuffer, "%lf", &numbers[nsi++]);
+        }
+        }
+        else{
+            while ((osi > 0) && (find(ch) <= find(operators[osi - 1]))){
+                numbers[nsi - 2] = domath(operators[osi - 1], numbers[nsi - 2], numbers[nsi - 1]);
+                osi--; nsi--;
+                
+            }
+            operators[osi++] = ch;
+            
+        }
+            i++;
+                
+            }
+        while (osi > 0) {
+            numbers[nsi - 2] = domath(operators[osi - 1], numbers[nsi - 2], numbers[nsi - 1]);
+            osi--; nsi--;
+        }
+        return numbers[0];
+    }
+
+        char check(char ch){
+            if ((ch >= '0' && ch <= '9') || ch == '.') return 1; else return 0;
+            
+        }
+        int find(char ch){
+            int find;
+            switch (ch){
+                case '*':
+                find= 0;
+                break;
+
+                case '+':
+                find = 1;
+                break;
+                
+                case '/':
+                find = 2;
+                break;
+
+                case '-':
+                find= 3;
+            }
+        return find;
+    }
+
+        double domath(char moperator, double num1, double num2){
+            double answer;
+            switch (moperator){
+                case '+':
+                answer = num1 + num2;
+                break;
+
+                case '-':
+                answer = num1 - num2;
+                break;
+                
+                case '*':
+                answer = num1 * num2;
+                break;
+                
+                case '/':
+                answer = num1 / num2;
+                break;
+
+                case '^':
+                answer = pow(num1, num2);
+                
+                break;
+             default:
+                
+                exit(-1);
+            }
+        return answer;
+}
